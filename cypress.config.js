@@ -18,7 +18,9 @@ module.exports = defineConfig({
           return null;
         },
       });
-      return config;
+    return config;
     },
+    testIsolation: false,
+    watchForFileChanges: true,
   },
 });
