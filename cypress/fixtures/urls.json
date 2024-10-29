@@ -1,0 +1,4 @@
+{
+    "dev": "https://pcareqaproviderportal.azurewebsites.net/authentication/signin",
+    "uat": "https://pcareqaproviderportal.azurewebsites.net/authentication/signin"
+}
