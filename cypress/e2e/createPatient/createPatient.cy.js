@@ -1,111 +1,55 @@
 ///<reference types = 'cypress'/>
-import AddPatient from "../../pages/createPatient/createPatient"
-const addPatient = new AddPatient()
+import AddPatient from "../../pages/createPatient/createPatient";
+const addPatient = new AddPatient();
 
-describe('Add Patient', () => {
-    beforeEach(function () {
-        cy.fixture("createPatient/createPatient.json").as("addPatient")
-       // cy.fixtures("")
-        cy.fixture("credentials.json").as("credentials");
-        cy.login();
-    })
-    
-    it.only('Add New Patient',function() {
-        
-       addPatient
-       .createPatient()
-        // addPatient
-        //     .enterFirstName(this.addPatient.firstName)
-        //     .enterMiddleName(this.addPatient.middleName)
-        //     .enterLastName(this.addPatient.lastName)
-        //     .enterAliasName(this.addPatient.aliseName)
-        //     .selectSuffix(this.addPatient.suffix)
-        //     .enterPreviousName(this.addPatient.previousName)
-        //     .enterDOB()
-        //     .selectPOS(this.addPatient.POS)
-        //     .selectSex(this.addPatient.sex)
-        //     .selectSexualOrientation(this.addPatient.sexualOrientation)
-        //     .selectGenderIdentity(this.addPatient.genderIdentity)
-        //     .selectPreferredLanguage(this.addPatient.preferredLanguage)
-        //     .selectRace(this.addPatient.race)
-        //     .selectEthnicity(this.addPatient.ethnicity)
-        //     .enterSSN(this.addPatient.SSN)
-        //     .selectPatientStatus(this.addPatient.status)
+describe("Add Patient", () => {
+  beforeEach(function () {
+    cy.fixture("createPatient/createPatient.json").as("addPatient");
+    cy.login();
+  });
 
-        //     //#Address Tab 
-        //     .clickAddressTab()
-        //     .enterAddressLineOne(this.addPatient.addressLine1)
-        //     .enterAddressLineTwo(this.addPatient.addressLine2)
-        //     .enterCity(this.addPatient.city)
-        //     .selectState()
-        //     .enterZIP(this.addPatient.ZIP)
-        //     .selectCountry()
-        //     .enterPhoneNumber(this.addPatient.phoneNumber)
-        //     .enterMobileNumber(this.addPatient.mobileNumber)
-        //     .enterWorkPhoneNumber(this.addPatient.workPhoneNumber)
-        //     .enterEmail(this.addPatient.email)
-        //     .enterPreviousAddressOne(this.addPatient.previousAddressLine1)
-        //     .enterPreviousAddressTwo(this.addPatient.previousAddressLine2)
-        //     .enterPreviousCity(this.addPatient.previousCity)
-        //     .selectPreviousState()
-        //     .enterPreviousZIP(this.addPatient.previousZIP)
-        //     .selectPreviousCountry()
-        //     .enterPreviousPhoneNumber(this.addPatient.previousPhoneNumber)
-        //     .enterPreviousMobileNumber(this.addPatient.previousMobileNumber)
-        //     .enterPreviousWorkPhoneNumber(this.addPatient.previousWorkPhone)
-        //     .enterPreviousEmail(this.addPatient.previousEmail)
-        //     .clickNextButton()
+  it.only("Validate addition and search patient", function () {
+    addPatient
 
-        //     //# Payor Tab
-        //     .enterProviderName(this.addPatient.payorProvider)
-        //     .enterPlanName(this.addPatient.planName)
-        //     .enterPolicyNumber(this.addPatient.policyNumber)
-        //     .enterGroupNumber(this.addPatient.groupNumber)
-        //     .selectInsuranceType(this.addPatient.insuranceType)
-        //     .enterSubscriberName(this.addPatient.subscriberName)
-        //     .selectRelationship(this.addPatient.relationship)
-        //     .selectProviderSSN(this.addPatient.subscriberSSN)
-        //     .selectProviderSex(this.addPatient.subscriberSex)
-        //     .enterSubscriberAddress(this.addPatient.subscriberAddress)
-        //     .enterSubscriberCity(this.addPatient.subscriberCity)
-        //     .selectSubscriberState()
-        //     .enterSubscriberZIP(this.addPatient.subscriberZIP)
-        //     .selectSubscriberCountry(this.addPatient.subscriberCountry)
-        //     .enterSubscriberEmployerName(this.addPatient.subscriberEmployer)
-        //     .enterSubscriberEmployerPhone(this.addPatient.SEPhone)
-        //     .enterSubscriberEmployerAddress(this.addPatient.SEAdress)
-        //     .enterSubscriberEmployerCity(this.addPatient.SECity)
-        //     .selectSubscriberEmployerState()
-        //     .enterSubscriberEmployerZIP(this.addPatient.SEZIP)
-        //     .selectEmployerCountry(this.addPatient.SECountry)
-        //     .clickOnSaveButton()
-        //     .verifyPatientCreated(this.addPatient.firstName)
-        //     .searchForPatient(this.addPatient.firstName)
-        //     .verifyPatientCreated(this.addPatient.firstName)
-        //     .deletePatient()
-    })
+      .accessPatientMenu()
+      .enterEmail(this.addPatient.patientEmail)
+      .selectTimeZone()
 
-    it('Check for duplicate patient.', function () {
-       addPatient
-            .clickAddPatientIcon()
-            .selectPointClickCareFacility()
-            .searchPatientPointClickCare(this.addPatient.firstNamePointClick, this.addPatient.lastNamePointClick)
-            .verifyPatientSearched(this.addPatient.lastNamePointClick)
-            .addDuplicatedSearchedPatient()
-            .verifyPatientAddedSuccessfully(this.addPatient.firstNamePointClick)
-            .clickOnSaveButton()
-            .clickXIcon()
-            .clickAddPatientIcon()
-            .selectPointClickCareFacility()
-            .searchPatientPointClickCare(this.addPatient.firstNamePointClick, this.addPatient.lastNamePointClick)
-            .verifyDuplicatePatientAlertDisplayed()
-            .closeDuplicatePatientModal()
-            .searchForPatient(this.addPatient.firstNamePointClick)
-            .openSearchedPatientProfile()
-            .deletePatient()
-    })
+      .enterFirstName1(this.addPatient.firstName);
+    addPatient
+      .enterMiddleName1(this.addPatient.middleName)
+      .enterLastName1(this.addPatient.lastName)
+      .enterDOB(this.addPatient.DOB)
+      .selectSex()
+      .selectState()
+      .enterZipCode(this.addPatient.zipCode)
+      .enterPhoneNumber(this.addPatient.patientPhone)
+      .clickOnSaveButton()
+      .patientSearch();
+    addPatient.searchByDaterange();
+  });
 
-    afterEach(()=>{
-        Cypress.session.clearAllSavedSessions()
-    })
-})
+  it("Validate created patient(viewPatient) and edit Patient.", function () {
+    addPatient
+      .accessPatientMenu()
+      .enterEmail(this.addPatient.patientEmail)
+      .selectTimeZone()
+
+      .enterFirstName1(this.addPatient.firstName);
+    addPatient
+      .enterMiddleName1(this.addPatient.middleName)
+      .enterLastName1(this.addPatient.lastName)
+      .enterDOB(this.addPatient.DOB)
+      .selectSex()
+      .selectState()
+      .enterZipCode(this.addPatient.zipCode)
+      .enterPhoneNumber(this.addPatient.patientPhone)
+      .clickOnSaveButton()
+      .viewPatient()
+      .editPatient();
+  });
+
+  afterEach(() => {
+    Cypress.session.clearAllSavedSessions();
+  });
+});
