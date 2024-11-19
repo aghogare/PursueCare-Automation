@@ -1,10 +1,27 @@
-{"datePickerRange":"12/8/2024 - 12/8/2024",
-"firstName":"john",
-"lastNmae":"David",
-"patientEmail":"johnD@saisystems.com",
-"legalSex":"male",
-"patientPhone":"(645) 134-2780"
-
-
-
+{
+  "datePickerRange": "11/11/2024 – 11/18/2024",
+  "firstName": "john",
+  "lastName": "David",
+  "patientEmail": "johnD123@saisystems.com",
+  "legalSex": "Male",
+  "patientPhone": "(645) 134-2780",
+  "middleName": "Jack",
+  "timeZone": "EST",
+  "zipCode": "10007",
+  "suffix": "Jr.",
+  "DOB": "10/01/2004",
+  "genderIdentity": "Male",
+  "maritalStatus": "Single",
+  "employmentStatus": "Full-Time",
+  "migrationStatus": "Not migrated",
+  "SSN": "5556760190",
+  "licenseID": "9805456109",
+  "addressLine1": "Wall Street",
+  "addressLine2": "Main Cross",
+  "ZIP": "10007",
+  "city": "New York",
+  "county": "Bronx County",
+  "state": "NY - New York",
+  "country": "USA",
+  "housePhoneNumber": "212-4636008"
 }
