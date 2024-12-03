@@ -8,7 +8,7 @@ describe("Add Patient", () => {
     cy.login();
   });
 
-  it.only("Validate scheduling appointment for patient", function () {
+  it("Validate scheduling appointment for patient", function () {
     appointment
       .clickScheduleAppointment()
 
