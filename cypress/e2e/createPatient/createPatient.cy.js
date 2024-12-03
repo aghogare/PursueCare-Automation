@@ -8,7 +8,7 @@ describe("Add Patient", () => {
     cy.login();
   });
 
-  it.only("Validate addition and search patient", function () {
+  it("Validate addition and search patient", function () {
     addPatient
 
       .accessPatientMenu()

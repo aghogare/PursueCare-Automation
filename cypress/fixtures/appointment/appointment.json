@@ -1,0 +1,15 @@
+{
+
+    "firstName": "john",
+    "lastName": "David",
+    "patientEmail": "johnD123@saisystems.com",
+    "legalSex": "Male",
+    "patientPhone": "(645) 134-2780",
+    "middleName": "Jack",
+    "timeZone": "EST",
+    "zipCode": "10007",
+    "suffix": "Jr.",
+    "DOB": "10/01/2004",
+    "patientAccess":"Akash First",
+    "host":"Nani babuForever"
+}
