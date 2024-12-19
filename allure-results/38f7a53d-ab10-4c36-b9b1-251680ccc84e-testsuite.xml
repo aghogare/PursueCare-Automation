@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1734346988057' stop='1734347161909'>
+    <name>Create New Patient and test functionalities of created Patient</name>
+    <title>Create New Patient and test functionalities of created Patient</title>
+    <test-cases>
+        <test-case start='1734346988057' status='passed' stop='1734347097318'>
+            <name>Validate adding new patient  and search patient (by Name and Date range)</name>
+            <title>Validate adding new patient  and search patient (by Name and Date range)</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+        <test-case start='1734347097330' status='passed' stop='1734347161909'>
+            <name>Validate viewPatient and edit Patient.</name>
+            <title>Validate viewPatient and edit Patient.</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

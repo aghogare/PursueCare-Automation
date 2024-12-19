@@ -24,24 +24,29 @@ module.exports = defineConfig({
   //   }
 
   // },
+  reporter: 'cypress-mochawesome-reporter',
   e2e: {
+   specPattern:['cypress/e2e/loginPage/loginPageDefaultValidation.cy.js','cypress/e2e/createPatient/createPatient.cy.js','cypress/e2e/appointment/appointment.cy.js'],
     experimentalRunAllSpecs: true,
     env: {
       baseUrl: "https://pcareqaproviderportal.azurewebsites.net/authentication/signin",
 
    
     },
-    pageLoadTimeout: 60000,
-    defaultCommandTimeout: 30000,
+    pageLoadTimeout: 40000,
+    defaultCommandTimeout: 4000,
     setupNodeEvents(on, config) {
      //  implement node event listeners here
-    //  require("cypress-mochawesome-reporter/plugin")(on);
+     require("cypress-mochawesome-reporter/plugin")(on);
       on("task", {
         log(message) {
           console.log(message);
           return null;
         },
-      });
+      },
+
+    );
+  
     return config;
     },
     testIsolation: false,
