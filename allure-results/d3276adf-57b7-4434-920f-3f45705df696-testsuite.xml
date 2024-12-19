@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1734024922268' stop='1734025246060'>
+    <name>Sceduling appointments for the Patient</name>
+    <title>Sceduling appointments for the Patient</title>
+    <test-cases>
+        <test-case start='1734024922268' status='passed' stop='1734025246060'>
+            <name>Validate joining zoom meeting and verifying  for patient</name>
+            <title>Validate joining zoom meeting and verifying  for patient</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

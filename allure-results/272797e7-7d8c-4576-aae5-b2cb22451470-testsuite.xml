@@ -1,0 +1,39 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1734346798838' stop='1734346985962'>
+    <name>Default Validations of Login page</name>
+    <title>Default Validations of Login page</title>
+    <test-cases>
+        <test-case start='1734346798838' status='passed' stop='1734346837613'>
+            <name>Verify the error message when Both Email and Password fields are blank.</name>
+            <title>Verify the error message when Both Email and Password fields are blank.</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+        <test-case start='1734346837618' status='passed' stop='1734346888244'>
+            <name>Verify the error message when invalid email is entered</name>
+            <title>Verify the error message when invalid email is entered</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+        <test-case start='1734346888249' status='passed' stop='1734346938651'>
+            <name>Verify the error message when invalid password is entered</name>
+            <title>Verify the error message when invalid password is entered</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+        <test-case start='1734346938654' status='passed' stop='1734346985962'>
+            <name>Verify the Login with valid Credentials.</name>
+            <title>Verify the Login with valid Credentials.</title>
+            <labels/>
+            <parameters/>
+            <steps/>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

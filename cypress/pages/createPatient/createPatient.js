@@ -41,12 +41,21 @@ class AddPatient {
     ":nth-child(9) > :nth-child(2) > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex";
   patientZipcode =
     ":nth-child(10) > :nth-child(1) > .mat-form-field > .mat-form-field-wrapper";
-  select3Dots = '[href="#"] > .material-icons'; //':nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > [href="#"] > .material-icons'
-  optionView = ":nth-child(6) > .cutome-cursor-pointer";
+  select3Dots = ':nth-child(1) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > [href="#"] > .material-icons'//'[href="#"] > .material-icons'; //':nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > [href="#"] > .material-icons'
+ 
+ 
+  optionView = ":nth-child(6) > .cutome-cursor-pointer";//cy.get(':nth-child(6) > .cutome-cursor-pointer')
   //  ":nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > .dropdown-menu >:nth-child(6) > .cutome-cursor-pointer";
   optionEdit = ":nth-child(7) > .cutome-cursor-pointer"; //':nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > .dropdown-menu >:nth-child(7) > .cutome-cursor-pointer'
   closePatient =
     ".addContainer > :nth-child(1) > .mat-focus-indicator > .mat-button-wrapper > .mat-icon";
+
+    patientMenu(){
+      cy.wait(5000);
+      cy.get(this.menuPatient).click({ force: true });
+
+      return this;
+    }
 
   accessPatientMenu() {
     cy.wait(5000);
@@ -57,59 +66,97 @@ class AddPatient {
     return this;
   }
 
-  viewPatient() {
-    utilities.log("To View Pateint");
+  
+  viewPatient(fname) {
+    utilities.log("To View Patient");
+  
     cy.wait(2000);
-
-    //const firstName = this.enterFirstName();
-    cy.get(this.searchPatient).type("David");
+    // Step 1: Search for the patient using their first name
+    cy.get(this.searchPatient).clear().type(fname); // Search using the patient's name
     cy.wait(2000);
+  
+    // Step 2: Select the first matching result from the table
+    cy.get('table[mat-table] tbody[role="rowgroup"]') 
+      .contains(fname) // Find the first occurrence of the patient's name
+      .first({force:true}) // Ensure only the first match is selected
+      .click(); // Select this patient
+  cy.wait(2000)
+    // Step 3: View patient details
     cy.get(this.select3Dots).click();
-    cy.wait(2000);
-    cy.get(this.optionView).click();
     cy.wait(4000);
+    cy.get(this.optionView).eq(0).click({ force: true });
+  //  cy.get(this.optionView).click({ force: true });
+    cy.wait(4000);
+  
+    // Step 4: Close the patient view
     cy.get(this.closePatient).click();
+  
     return this;
   }
+  
 
-  patientSearch() {
+  patientSearch(firstName) {
     cy.wait(2000);
-    // const firstName= this.enterFirstName();
-    cy.get(this.searchPatient).type("David");
+   // const firstName= this.enterFirstName();
+    cy.wait(3000)
+    cy.get(this.searchPatient).type(firstName);
     cy.wait(2000);
     cy.get(this.searchPatient).clear();
   }
 
-  searchByDaterange() {
-    cy.wait(2000);
-
-    cy.get(this.startDate).type("11/11/2024");
-
-    cy.get(this.endDate).type("11/19/2024").click({ force: true });
-    cy.wait(2000);
-    cy.get(this.dateRangePick).dblclick({ force: true });
+  duplicatePatient(){
+    cy.get(this.patientEmail).scrollIntoView({force:true})
+    cy.wait(3000)    
+    cy.get(this.closePatient).click()
     return this;
   }
-  editPatient() {
+
+    searchByDaterange() {
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString('en-US'); // Formats date as MM/DD/YYYY
+    
+      cy.wait(3000);
+    
+      cy.get(this.startDate).type(formattedDate);
+    
+      cy.get(this.endDate).type(formattedDate).click({ force: true });
+      cy.wait(2000);
+      cy.get(this.dateRangePick).dblclick({ force: true });
+      cy.wait(2000)
+      //cy.get('.dropdown.m-l-10 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').clear();
+      //cy.wait(2000)
+      return this;
+    }
+    
+  
+  editPatient(fname) {
     utilities.log("Edit Patient Details.");
     cy.wait(2000);
+   /// const fname=this.enterFirstName()
+   // const firstName= this.generateFirstName();
+    cy.get(this.searchPatient).clear().type(fname);
+    cy.wait(2000);
 
-    cy.get(this.searchPatient).clear().type("David");
-    cy.wait(2000);
+    cy.get('table[mat-table] tbody[role="rowgroup"]') // Selector for the patient search results list
+    .should('contain.text', fname) // Confirm the search results contain the patient's name
+    .first({force:true}) // Pick the first result (or refine based on criteria)
+    .click({force:true}); // Select the patient to edit
+
     cy.get(this.select3Dots).click();
-    cy.wait(2000);
-    cy.get(this.optionEdit).click();
+    cy.wait(4000);
+    cy.get(this.optionEdit).eq(0).click({force:true});
     cy.wait(2000);
     utilities.log("To Select Sex.");
     cy.get('mat-select[formcontrolname="gender"]').click();
     cy.get("mat-option").eq(0).click();
     cy.wait(3000);
-    cy.wait(3000);
+   // cy.wait(3000);
     utilities.log("To select Save Button.");
     cy.get(this.btnPatientSave).scrollIntoView();
     cy.wait(2000);
     cy.get(this.btnPatientSave).click({ force: true });
-
+    // cy.wait(3000);
+    // cy.get(this.closePatient).click();
     return this;
   }
 
@@ -125,23 +172,31 @@ class AddPatient {
     const firstName = this.generateFirstName();
     // utilities.enterValue(this.firstName, firstName);
     cy.get(this.firstName).type(firstName);
+   cy.writeFile('cypress/fixtures/createPatient/createPatient1.json', { firstName });
+
     cy.wait(2000);
     return firstName;
   }
 
   enterMiddleName() {
     utilities.log("To Enter Patients Middle Name");
-    const firstName = this.generateFirstName();
-    cy.get(this.middleName).type(firstName);
+    const middleName = this.generateFirstName();
+    cy.get(this.middleName).type(middleName);
     cy.wait(3000);
-    return this;
+    return middleName;
   }
+
   enterLastName() {
     utilities.log("To Enter Patients Last Name");
     const lastName = this.generateLastName();
     cy.get(this.lastName).type(lastName);
+
+    cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+      data.lastName = lastName; // Add the last name to the existing data
+      cy.writeFile('cypress/fixtures/createPatient/createPatient1.json', data); // Write the updated data back to the file
+    });
     cy.wait(3000);
-    return this;
+    return lastName;
   }
 
   enterFirstName1(firstName) {
@@ -179,12 +234,10 @@ class AddPatient {
       "James",
       "Robert",
       "William",
-      "Richard",
-      "Charles",
-      "Mary",
+ 
+     
       "Patricia",
-      "Jennifer",
-      "Linda",
+      
       "Elizabeth",
       "Barbara",
       "Susan",
@@ -193,6 +246,23 @@ class AddPatient {
     const firstName = getRandomElement(firstNames);
     const fName = `${firstName}`;
     return fName;
+  }
+
+  generateEmailID(firstName, lastName) {
+    const domains = ["example.com", "testmail.com", "mydomain.org"]; // List of possible domains
+    const domain = domains[Math.floor(Math.random() * domains.length)]; // Randomly select a domain
+    // Combine the first name and last name to create a more descriptive email ID
+    return `${firstName.toLowerCase()}.${lastName.toLowerCase()}Automation@${domain}`;
+  }
+  
+  enterEmailID() {
+    utilities.log("To Enter Patient's Email ID");
+    const firstName = this.enterFirstName(); 
+    const lastName=this.enterLastName()
+    const emailID = this.generateEmailID(firstName,lastName);
+    cy.get(this.patientEmail).type(emailID); 
+    cy.wait(2000);
+    return emailID; 
   }
 
   generateLastName() {
