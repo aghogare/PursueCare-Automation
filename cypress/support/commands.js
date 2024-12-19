@@ -31,6 +31,27 @@ Cypress.Commands.add('login', () => {
 //   }
 // );
 // });
+Cypress.Commands.add('login', () => {
+  cy.session('login', () => {
+    const environment = Cypress.env('url'); 
+    const { email, password } = credentials[environment] || { email: 'nani99@pursuecare.com', password: 'Akshay@123' };
+    const baseUrl = urls[environment] || 'https://pcareqaproviderportal.azurewebsites.net'; // Default base URL if environment is undefined
+
+    // Perform an API call to log in
+    cy.request({
+      method: 'POST',
+      url: `${baseUrl}/api/auth/login`, // Concatenate base URL with endpoint
+      body: {
+        email,
+        password,
+      },
+    }).then((response) => {
+      // Save the token or session data
+      window.localStorage.setItem('token', response.body.token); // Adjust based on your app's response
+    });
+  });
+});
+
 
 Cypress.Commands.add('clearSession', () => {
   cy.clearAllLocalStorage();
