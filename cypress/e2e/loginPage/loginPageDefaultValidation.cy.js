@@ -4,9 +4,13 @@ const environment = Cypress.env('url') || 'dev';
 const loginPageValidation = new LoginPageDefualtValidation()
 
 describe('Default Validations of Login page', () => {
+    before(()=>{cy.visit("https://pcareqaproviderportal.azurewebsites.net/authentication/signin")} 
+    
+)
+    
     beforeEach(() => {
        // cy.visit(urls[environment]);
-        cy.visit("https://pcareqaproviderportal.azurewebsites.net/authentication/signin")
+       
         cy.fixture('loginPage/loginPageDefaultValidation.json').as('loginPageValidations')
         cy.fixture("credentials.json").as("credentials")
     })
@@ -15,20 +19,22 @@ describe('Default Validations of Login page', () => {
         loginPageValidation.verifyLoginPageTitle(this.loginPageValidations.loginPageTitle);
     })
 
-    it.only('Verify the Web Elements are present on login page.', function () {
+    it('Verify the Web Elements are present on login page.', function () {
         loginPageValidation.verifyLoginPageWebElements()
     })
 
-    it.only('Verify the error message when Both Email and Password is invalid.', function () {
+    it.only('Verify the error message when Both Email and Password fields are blank.', function () {
         loginPageValidation.verifyErroMsgEmailPasswordBlank()
     })
 
-    it('Verify the error message when invalid email is entered', function(){
+    it.only('Verify the error message when invalid email is entered', function(){
         loginPageValidation.verifyErrorMsgInvalidEmail(this.loginPageValidations.invalidEmail, this.loginPageValidations.validPassword)
+   
     })
 
-    it('Verify the error message when invalid password is entered', function(){
+    it.only('Verify the error message when invalid password is entered', function(){
         loginPageValidation.verifyErrorMsgInvalidPassword(this.loginPageValidations.validEmail, this.loginPageValidations.invalidPassword)
+        Cypress.session.clearAllSavedSessions();
     })
 
 
@@ -43,13 +49,16 @@ describe('Default Validations of Login page', () => {
 
     it('Verify Default radio button selection on Forgot Password page.',function(){
         loginPageValidation.verifyRadioDefaultChecked()
+
     })
 
     it.only("Verify the Login with valid Credentials.", function () {
-        loginPageValidation.verifyLogin(
-          this.credentials.email,
-          this.credentials.key
-        );
+        // loginPageValidation.verifyLogin(
+        //   this.credentials.email,
+        //   this.credentials.key
+        // );
+
+        loginPageValidation.verifyLogin(this.loginPageValidations.validEmail,this.loginPageValidations.validPassword)
       })
     afterEach(() => {
         Cypress.session.clearAllSavedSessions();

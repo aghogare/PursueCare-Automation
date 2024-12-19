@@ -2,52 +2,65 @@
 import AddPatient from "../../pages/createPatient/createPatient";
 const addPatient = new AddPatient();
 
-describe("Add Patient", () => {
+describe("Create New Patient and test functionalities of created Patient", () => {
   beforeEach(function () {
-    cy.fixture("createPatient/createPatient.json").as("addPatient");
+    cy.fixture("createPatient/createPatient.json").as("addPatients");
     cy.login();
   });
 
-  it("Validate addition and search patient", function () {
-    addPatient
 
+  it("Validate adding new patient  and search patient (by Name and Date range)", function () {
+ 
+ const fname=addPatient.generateFirstName()  
+    addPatient
+      
       .accessPatientMenu()
-      .enterEmail(this.addPatient.patientEmail)
-      .selectTimeZone()
+     // .enterEmail(this.addPatient.patientEmail)
+     .enterEmailID()
+      addPatient.selectTimeZone()
+     // .enterFirstName();
 
-      .enterFirstName1(this.addPatient.firstName);
-    addPatient
-      .enterMiddleName1(this.addPatient.middleName)
-      .enterLastName1(this.addPatient.lastName)
-      .enterDOB(this.addPatient.DOB)
+    //.enterFirstName1(this.addPatient.firstName)
+    addPatient.enterMiddleName()
+    // .enterMiddleName1(this.addPatient.middleName)
+   // addPatient
+     // .enterLastName()
+      // .enterLastName1(this.addPatient.lastName)
+     addPatient
+      .enterDOB(this.addPatients.DOB)
       .selectSex()
       .selectState()
-      .enterZipCode(this.addPatient.zipCode)
-      .enterPhoneNumber(this.addPatient.patientPhone)
+      .enterZipCode(this.addPatients.zipCode)
+      .enterPhoneNumber(this.addPatients.patientPhone)
       .clickOnSaveButton()
-      .patientSearch();
-    addPatient.searchByDaterange();
+      .patientSearch(fname)
+   addPatient.searchByDaterange();
   });
 
-  it("Validate created patient(viewPatient) and edit Patient.", function () {
-    addPatient
-      .accessPatientMenu()
-      .enterEmail(this.addPatient.patientEmail)
-      .selectTimeZone()
 
-      .enterFirstName1(this.addPatient.firstName);
-    addPatient
-      .enterMiddleName1(this.addPatient.middleName)
-      .enterLastName1(this.addPatient.lastName)
-      .enterDOB(this.addPatient.DOB)
-      .selectSex()
-      .selectState()
-      .enterZipCode(this.addPatient.zipCode)
-      .enterPhoneNumber(this.addPatient.patientPhone)
-      .clickOnSaveButton()
-      .viewPatient()
-      .editPatient();
+  it("Validate viewPatient and edit Patient.", function () {
+    const fname=addPatient.generateFirstName()  
+    addPatient.patientMenu().viewPatient(fname).editPatient(fname);
   });
+
+  // it.skip("Validate Duplicate patient creation", function () {
+  //   addPatient
+  //     .accessPatientMenu()
+  //     .enterEmail(this.addPatients.patientEmail)
+  //     .selectTimeZone()
+
+  //     .enterFirstName1(this.addPatients.firstName);
+  //   addPatient
+  //     .enterMiddleName1(this.addPatients.middleName)
+  //     .enterLastName1(this.addPatients.lastName)
+  //     .enterDOB(this.addPatients.DOB)
+  //     .selectSex()
+  //     .selectState()
+  //     .enterZipCode(this.addPatients.zipCode)
+  //     .enterPhoneNumber(this.addPatients.patientPhone)
+  //     .clickOnSaveButton()
+  //     .duplicatePatient();
+  // });
 
   afterEach(() => {
     Cypress.session.clearAllSavedSessions();

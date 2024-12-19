@@ -1,6 +1,7 @@
 // import LoginPage from '../pages/LoginPage'
 // const loginPage = new LoginPage();
 
+require('cypress-real-events')
 const loginPage = require('../pages/LoginPage')
 const credentials = require('../fixtures/credentials.json');
 const urls = require('../fixtures/urls.json');
