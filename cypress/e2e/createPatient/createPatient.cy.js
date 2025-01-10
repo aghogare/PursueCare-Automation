@@ -1,17 +1,27 @@
 ///<reference types = 'cypress'/>
 import AddPatient from "../../pages/createPatient/createPatient";
 const addPatient = new AddPatient();
+import LoginPageDefualtValidation from "../../pages/loginPage/loginPageDefaultValidation"
+const urls = require("../../fixtures/urls.json");
+const environment = Cypress.env('url') || 'dev';
+const loginPageValidation = new LoginPageDefualtValidation()
 
 describe("Create New Patient and test functionalities of created Patient", () => {
+
+  // before(function()  {
+  //   cy.login();});
   beforeEach(function () {
+
     cy.fixture("createPatient/createPatient.json").as("addPatients");
-    cy.login();
+    cy.fixture("createPatient/createPatient1.json").as("patients");
+    cy.login()
   });
 
 
   it("Validate adding new patient  and search patient (by Name and Date range)", function () {
  
- const fname=addPatient.generateFirstName()  
+ //const fname=addPatient.generateFirstName()  
+ const fname=this.patients.firstName
     addPatient
       
       .accessPatientMenu()
@@ -33,14 +43,24 @@ describe("Create New Patient and test functionalities of created Patient", () =>
       .enterZipCode(this.addPatients.zipCode)
       .enterPhoneNumber(this.addPatients.patientPhone)
       .clickOnSaveButton()
-      .patientSearch(fname)
+      .patientSearch()
    addPatient.searchByDaterange();
   });
 
 
   it("Validate viewPatient and edit Patient.", function () {
-    const fname=addPatient.generateFirstName()  
-    addPatient.patientMenu().viewPatient(fname).editPatient(fname);
+  //  const fname=addPatient.generateFirstName()  
+    const fname=this.patients.firstName
+    addPatient.patientMenu().editPatient().viewPatient();
+  });
+
+
+  it("Validate deletePatient.", function () {
+    const email=this.patients.email
+     const fname=this.patients.firstName
+     const lname=this.patients.lastName
+   
+    addPatient.useRecentlyStoredDetailsAndDelete()
   });
 
   // it.skip("Validate Duplicate patient creation", function () {

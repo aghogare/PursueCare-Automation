@@ -42,20 +42,30 @@ class AddPatient {
   patientZipcode =
     ":nth-child(10) > :nth-child(1) > .mat-form-field > .mat-form-field-wrapper";
   select3Dots = ':nth-child(1) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > [href="#"] > .material-icons'//'[href="#"] > .material-icons'; //':nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > [href="#"] > .material-icons'
- 
- 
+  pLogo =
+    "div.custom-thumbnail_PursueCare_logo > .custom-thumbnail_PursueCare_logo";
+  headingLog = ".custome-signIn-style";
+  logInButton = "button[type='submit']";
+
+  emailField =//"#mat-input-1"
+    //".col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex";
+    ".col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix"; // "#mat-input-0"
+
+  passwordField =
+    //".col-xl-12col-lg-12 > .mat-form-field > .mat-form-field-wrapper"; //"#mat-input-1"
+    '.col-xl-12col-lg-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix'
   optionView = ":nth-child(6) > .cutome-cursor-pointer";//cy.get(':nth-child(6) > .cutome-cursor-pointer')
   //  ":nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > .dropdown-menu >:nth-child(6) > .cutome-cursor-pointer";
   optionEdit = ":nth-child(7) > .cutome-cursor-pointer"; //':nth-child(2) > .cdk-column-actions > .cutome-position-action-panel > .header-dropdown > .pl-3 > .dropdown-menu >:nth-child(7) > .cutome-cursor-pointer'
   closePatient =
     ".addContainer > :nth-child(1) > .mat-focus-indicator > .mat-button-wrapper > .mat-icon";
 
-    patientMenu(){
-      cy.wait(5000);
-      cy.get(this.menuPatient).click({ force: true });
+  patientMenu() {
+    cy.wait(5000);
+    cy.get(this.menuPatient).click({ force: true });
 
-      return this;
-    }
+    return this;
+  }
 
   accessPatientMenu() {
     cy.wait(5000);
@@ -66,98 +76,115 @@ class AddPatient {
     return this;
   }
 
-  
-  viewPatient(fname) {
+
+  viewPatient() {
     utilities.log("To View Patient");
-  
+        // Read the stored details from the JSON file
+        cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+          const { firstName, lastName } = data;
     cy.wait(2000);
     // Step 1: Search for the patient using their first name
-    cy.get(this.searchPatient).clear().type(fname); // Search using the patient's name
+    cy.get(this.searchPatient).clear().type(firstName); // Search using the patient's name
     cy.wait(2000);
-  
+
     // Step 2: Select the first matching result from the table
-    cy.get('table[mat-table] tbody[role="rowgroup"]') 
-      .contains(fname) // Find the first occurrence of the patient's name
-      .first({force:true}) // Ensure only the first match is selected
+    cy.get('table[mat-table] tbody[role="rowgroup"]')
+      .contains(firstName) // Find the first occurrence of the patient's name
+      .first({ force: true }) // Ensure only the first match is selected
       .click(); // Select this patient
-  cy.wait(2000)
+    cy.wait(2000)
     // Step 3: View patient details
     cy.get(this.select3Dots).click();
     cy.wait(4000);
     cy.get(this.optionView).eq(0).click({ force: true });
-  //  cy.get(this.optionView).click({ force: true });
+    //  cy.get(this.optionView).click({ force: true });
     cy.wait(4000);
-  
+
     // Step 4: Close the patient view
     cy.get(this.closePatient).click();
-  
-    return this;
-  }
-  
 
-  patientSearch(firstName) {
+  //  return this;
+
+  });
+  return this;
+  }
+
+
+  patientSearch() {
+
+      // Read the stored details from the JSON file
+      cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+        const { firstName, lastName } = data;
     cy.wait(2000);
-   // const firstName= this.enterFirstName();
+    // const firstName= this.enterFirstName();
     cy.wait(3000)
     cy.get(this.searchPatient).type(firstName);
     cy.wait(2000);
     cy.get(this.searchPatient).clear();
+  });
+
   }
 
-  duplicatePatient(){
-    cy.get(this.patientEmail).scrollIntoView({force:true})
-    cy.wait(3000)    
+  duplicatePatient() {
+    cy.get(this.patientEmail).scrollIntoView({ force: true })
+    cy.wait(3000)
     cy.get(this.closePatient).click()
     return this;
   }
 
-    searchByDaterange() {
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString('en-US'); // Formats date as MM/DD/YYYY
-    
-      cy.wait(3000);
-    
-      cy.get(this.startDate).type(formattedDate);
-    
-      cy.get(this.endDate).type(formattedDate).click({ force: true });
-      cy.wait(2000);
-      cy.get(this.dateRangePick).dblclick({ force: true });
-      cy.wait(2000)
-      //cy.get('.dropdown.m-l-10 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').clear();
-      //cy.wait(2000)
-      return this;
-    }
-    
-  
-  editPatient(fname) {
+  searchByDaterange() {
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US'); // Formats date as MM/DD/YYYY
+
+    cy.wait(3000);
+
+    cy.get(this.startDate).type(formattedDate);
+
+    cy.get(this.endDate).type(formattedDate).click({ force: true });
+    cy.wait(2000);
+    cy.get(this.dateRangePick).dblclick({ force: true });
+    cy.wait(2000)
+    //cy.get('.dropdown.m-l-10 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').clear();
+    //cy.wait(2000)
+    return this;
+  }
+
+
+  editPatient() {
     utilities.log("Edit Patient Details.");
     cy.wait(2000);
-   /// const fname=this.enterFirstName()
-   // const firstName= this.generateFirstName();
-    cy.get(this.searchPatient).clear().type(fname);
+
+     // Read the stored details from the JSON file
+     cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+      const { firstName, lastName } = data;
+    /// const fname=this.enterFirstName()
+    // const firstName= this.generateFirstName();
+    cy.get(this.searchPatient).clear().type(firstName);
     cy.wait(2000);
 
     cy.get('table[mat-table] tbody[role="rowgroup"]') // Selector for the patient search results list
-    .should('contain.text', fname) // Confirm the search results contain the patient's name
-    .first({force:true}) // Pick the first result (or refine based on criteria)
-    .click({force:true}); // Select the patient to edit
+      .should('contain.text', firstName) // Confirm the search results contain the patient's name
+      .first({ force: true }) // Pick the first result (or refine based on criteria)
+      .click({ force: true }); // Select the patient to edit
 
     cy.get(this.select3Dots).click();
     cy.wait(4000);
-    cy.get(this.optionEdit).eq(0).click({force:true});
+    cy.get(this.optionEdit).eq(0).click({ force: true });
     cy.wait(2000);
     utilities.log("To Select Sex.");
     cy.get('mat-select[formcontrolname="gender"]').click();
     cy.get("mat-option").eq(0).click();
     cy.wait(3000);
-   // cy.wait(3000);
+    // cy.wait(3000);
     utilities.log("To select Save Button.");
     cy.get(this.btnPatientSave).scrollIntoView();
     cy.wait(2000);
     cy.get(this.btnPatientSave).click({ force: true });
     // cy.wait(3000);
     // cy.get(this.closePatient).click();
-    return this;
+   
+  });
+  return this;
   }
 
   enterEmail(emailID) {
@@ -172,7 +199,7 @@ class AddPatient {
     const firstName = this.generateFirstName();
     // utilities.enterValue(this.firstName, firstName);
     cy.get(this.firstName).type(firstName);
-   cy.writeFile('cypress/fixtures/createPatient/createPatient1.json', { firstName });
+    cy.writeFile('cypress/fixtures/createPatient/createPatient1.json', { firstName });
 
     cy.wait(2000);
     return firstName;
@@ -234,10 +261,10 @@ class AddPatient {
       "James",
       "Robert",
       "William",
- 
-     
+
+
       "Patricia",
-      
+
       "Elizabeth",
       "Barbara",
       "Susan",
@@ -252,17 +279,24 @@ class AddPatient {
     const domains = ["example.com", "testmail.com", "mydomain.org"]; // List of possible domains
     const domain = domains[Math.floor(Math.random() * domains.length)]; // Randomly select a domain
     // Combine the first name and last name to create a more descriptive email ID
-    return `${firstName.toLowerCase()}.${lastName.toLowerCase()}Automation@${domain}`;
+    const emailID = `${firstName.toLowerCase()}.${lastName.toLowerCase()}Automation@${domain}`;
+
+    cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+      data.emailID = emailID; // Add the email ID to the existing data
+      cy.writeFile('cypress/fixtures/createPatient/createPatient1.json', data); // Write the updated data back to the file
+    });
+
+    return emailID;
   }
-  
+
   enterEmailID() {
     utilities.log("To Enter Patient's Email ID");
-    const firstName = this.enterFirstName(); 
-    const lastName=this.enterLastName()
-    const emailID = this.generateEmailID(firstName,lastName);
-    cy.get(this.patientEmail).type(emailID); 
+    const firstName = this.enterFirstName();
+    const lastName = this.enterLastName()
+    const emailID = this.generateEmailID(firstName, lastName);
+    cy.get(this.patientEmail).type(emailID);
     cy.wait(2000);
-    return emailID; 
+    return emailID;
   }
 
   generateLastName() {
@@ -343,6 +377,79 @@ class AddPatient {
     cy.get(this.btnPatientSave).click({ force: true });
     cy.wait(3000);
     return this;
+  }
+
+
+  adminLogin() {
+    cy.wait(3000);
+    utilities.log(" Login to Admin.");
+    cy.get('.rounded-circle').click();//provider
+    cy.wait(2000);
+    cy.get('.user_dw_menu > :nth-child(3) > a').click();//logout
+    cy.wait(2000);
+    cy.get(this.emailField).type("adminpcare@pursuecare.com");
+    cy.get(this.passwordField).type("Akshay@123");
+    cy.get(this.logInButton).click();
+    return this;
+  }
+
+  deletePatient(fName, lName) {
+
+    // cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+    //   const { firstName, lastName, emailID } = data; //
+    const fullName = `${fName} ${lName}`;
+    // const email = `${email}`;
+    cy.wait(3000);
+    cy.get(':nth-child(5) > .menu-toggle').click();//menuPatient
+    cy.wait(2000);
+    cy.get('.active > .ml-menu.ng-star-inserted > :nth-child(1) > .client-menu-font').click();//patientList
+    cy.wait(2000);
+    cy.get(this.searchPatient).type(fullName);
+    cy.wait(2000);
+    cy.get('[href="#"] > .material-icons').click();//3 dots
+    cy.wait(2000);
+    cy.get(':nth-child(8) > .cutome-cursor-pointer').click();//delete
+    cy.wait(2000);
+    cy.get('.mat-dialog-actions > .mat-primary').click();//deletebutton
+
+
+    return this;
+  }
+
+  // deleteRecentlyStoredPatient() {
+
+
+  //     cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+  //       const { firstName, lastName, emailID } = data; //
+  //     const fullName = `${fname} ${lname}`;
+  //    // const email = `${email}`;
+  //     cy.wait(3000);
+  //     cy.get(':nth-child(5) > .menu-toggle').click();//menuPatient
+  //     cy.wait(2000);
+  //     cy.get('.active > .ml-menu.ng-star-inserted > :nth-child(1) > .client-menu-font').click();//patientList
+  //     cy.wait(2000);
+  //     cy.get(this.searchPatient).type(fullName);
+  //     cy.wait(2000);
+  //     cy.get('[href="#"] > .material-icons').click();//3 dots
+  //     cy.wait(2000);
+  //     cy.get(':nth-child(8) > .cutome-cursor-pointer').click();//delete
+  //     cy.wait(2000);
+  //     cy.get('.mat-dialog-actions > .mat-primary').click();//deletebutton
+  //     });
+
+  //   return this;
+
+
+  // }
+
+  useRecentlyStoredDetailsAndDelete() {
+    // Read the stored details from the JSON file
+    cy.readFile('cypress/fixtures/createPatient/createPatient1.json').then((data) => {
+      const { firstName, lastName } = data;
+
+      this.adminLogin(); // Login as Admin
+      this.deletePatient(firstName, lastName); // Delete the patient using stored details
+    });
   }
 }
 export default AddPatient;

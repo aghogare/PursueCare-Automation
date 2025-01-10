@@ -8,10 +8,11 @@ const baseUrl = urls[environment];
 class appointment {
   tabAppointment = ":nth-child(4) > .ng-star-inserted";
   menuDashboard = ".list > :nth-child(2) > .ng-star-inserted";
-  btnScheduleApptmt = ".m-b-25 > .mat-raised-button";
+  btnScheduleApptmt = ".m-b-25 > .mat-raised-button";//'.col-3 > .mdc-button > .mdc-button__label'//
   DDCategory =
     ":nth-child(1) > .col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix";
-  DDAptType =
+  DDAptType =//':nth-child(2) > .col-xl-12 > .mat-mdc-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix'
+  //cy.get(':nth-child(2) > .col-xl-12 > .mat-mdc-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix')
     ":nth-child(2) > .col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix";
   DDProvider =
     ":nth-child(3) > .col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix";
@@ -23,7 +24,8 @@ class appointment {
     ":nth-child(6) > .col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix";
   DDPateintName =
     ":nth-child(7) > .col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix";
-  DDAppointmentDate =
+    //cy.get(':nth-child(2) > .col-xl-12 > .mat-mdc-form-field > .mat-mdc-text-field-wrapper > .mat-mdc-form-field-flex > .mat-mdc-form-field-infix')
+    DDAppointmentDate =
     ":nth-child(8) > .col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix";
   availableTimeSlot = ":nth-child(12) > .mat-chip"; //9:45-10 am
   timeSlot230 = ":nth-child(19) > .mat-chip"; //2:30-300pm
@@ -46,8 +48,19 @@ class appointment {
   currentTime =
     ".cdk-column-starttime > .mat-sort-header-container > .mat-sort-header-content";
   bookAppointment = ".mat-dialog-actions > .mat-primary";
-  meetingStartTime='mat-cell cdk-cell cdk-column-starttime mat-column-starttime ng-star-inserted'
-  meetingEndTime='mat-cell cdk-cell cdk-column-endtime mat-column-starttime ng-star-inserted'
+  meetingStartTime = 'mat-cell cdk-cell cdk-column-starttime mat-column-starttime ng-star-inserted'
+  meetingEndTime = 'mat-cell cdk-cell cdk-column-endtime mat-column-starttime ng-star-inserted'
+  logInButton = "button[type='submit']";
+
+  emailField =//"#mat-input-1"
+    //".col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex";
+    ".col-xl-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix"; // "#mat-input-0"
+
+  passwordField =
+    //".col-xl-12col-lg-12 > .mat-form-field > .mat-form-field-wrapper"; //"#mat-input-1"
+    '.col-xl-12col-lg-12 > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix'
+  optionView = ":nth-child(6) > .cutome-cursor-pointer";//cy.get(':nth-child(6) > .cutome-cursor-pointer')
+
 
   clickScheduleAppointment() {
     cy.wait(3000);
@@ -112,7 +125,7 @@ class appointment {
     cy.log(`Selected Patient Name: ${lastName}`);
     cy.get(this.DDPateintName).click({ force: true });
     cy.get("mat-option").contains(lastName).dblclick({ force: true });
-    
+
     return this;
   }
 
@@ -338,7 +351,7 @@ class appointment {
     return this;
   }
 
-  currentTimeZone() {}
+  currentTimeZone() { }
 
   joinZoomMeetingEnd() {
     const todayDate = new Date().getDate();
@@ -356,12 +369,12 @@ class appointment {
       });
     });
 
-    
+
     cy.wait(10000);
-   // cy.get('tbody > :nth-child(1) > .cdk-column-name')
- 
- //cy.get('mat-tooltip-trigger material-icons custom-icon-font cutom-cursor-default isInWR-Grey meOffline ng-star-inserted').invoke('show')
-  cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').realHover('mouse')
+    // cy.get('tbody > :nth-child(1) > .cdk-column-name')
+
+    //cy.get('mat-tooltip-trigger material-icons custom-icon-font cutom-cursor-default isInWR-Grey meOffline ng-star-inserted').invoke('show')
+    cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').realHover('mouse')
     cy.get(this.iconZoom).click();
     cy.wait(3000);
     this.verifyZoomElements();
@@ -370,14 +383,14 @@ class appointment {
     return this
 
   }
-  clickReport(){
-    cy.get(':nth-child(8) > .menu-toggle').click({force:true})
+  clickReport() {
+    cy.get(':nth-child(8) > .menu-toggle').click({ force: true })
     cy.wait(2000)
-    cy.get(':nth-child(8) > .ml-menu.ng-star-inserted > :nth-child(1) > .client-menu-font').click({force:true})
-   // cy.get(':nth-child(3) > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').select(2,{force:true})
-   cy.get('.cdk-column-appointmentstatus > .mat-sort-header-container > .mat-sort-header-arrow').click({force:true}) 
-  
-   return this;
+    cy.get(':nth-child(8) > .ml-menu.ng-star-inserted > :nth-child(1) > .client-menu-font').click({ force: true })
+    // cy.get(':nth-child(3) > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').select(2,{force:true})
+    cy.get('.cdk-column-appointmentstatus > .mat-sort-header-container > .mat-sort-header-arrow').click({ force: true })
+
+    return this;
   }
 
 
@@ -396,77 +409,136 @@ class appointment {
         win.location.href = url; // Redirect to the URL in the same window
       });
     });
-    cy.get(".cdk-column-starttime > .mat-sort-header-container").dblclick({
-      force: true,
-    });
-   
+    // cy.get(".cdk-column-starttime > .mat-sort-header-container").dblclick({
+    //   force: true,
+    // });
+
     cy.wait(3000);
     cy.get(this.iconZoom).click();
     cy.wait(3000);
 
-return this;
+    return this;
   }
 
-  statusCompleted(){
+  joinZoomMeetingorangelight() {
+    const todayDate = new Date().getDate();
+
+    let originalUrl; // Variable to store the original URL
+
+    // Save the original URL and stub the redirection
+    cy.url().then((url) => {
+      originalUrl = url; // Save the current URL
+    });
+
+    cy.window().then((win) => {
+      cy.stub(win, "open").callsFake((url) => {
+        win.location.href = url; // Redirect to the URL in the same window
+      });
+    });
+    cy.get(".cdk-column-starttime > .mat-sort-header-container").dblclick({
+      force: true,
+    });
+
+    cy.wait(70000);
+   // cy.get(this.iconZoom).click();
+    cy.wait(3000);
+
+    return this;
+  }
+
+  statusCompleted() {
+    ////status
+    cy.get('select[formcontrolname="status"]').select("Completed Successfully")//index =0
+    cy.get('button[type="submit"].btn.btn-primary')
+      .should("not.be.disabled") // Verify button is enabled
+      .click();
+    cy.wait(4000);
+    cy.go("back");
+    return this;
+  }
+
+  changeStatus(index) {
 
     ////status
-    cy.get('select[formcontrolname="status"]').select("Completed Successfully")
+    cy.get('select[formcontrolname="status"]').select("Patient No Show");//Patient No Show index-1
     cy.get('button[type="submit"].btn.btn-primary')
       .should("not.be.disabled") // Verify button is enabled
       .click();
     cy.wait(4000);
     cy.go("back");
 
-  return this;
-}
+    return this;
+  }
 
-  changeStatus(index){
+  deleteAppointment() {
+    cy.get('button.mat-mini-fab.mat-warn.mat-button-base mat-icon').contains('delete').click({ force: true });
+   cy.wait(2000);
+   cy.get('button.mat-raised-button.mat-primary').contains('Delete').click({ force: true });
+    cy.wait(2000);
+    return this;
+  }
 
-      ////status
-      cy.get('select[formcontrolname="status"]').select(index);
-      cy.get('button[type="submit"].btn.btn-primary')
-        .should("not.be.disabled") // Verify button is enabled
-        .click();
-      cy.wait(4000);
-      cy.go("back");
-
+  adminLogin() {
+    cy.wait(3000);
+    utilities.log(" Login to Admin.");
+    cy.get('.rounded-circle').click();//provider
+    cy.wait(2000);
+    cy.get('.user_dw_menu > :nth-child(3) > a').click();//logout
+    cy.wait(2000);
+    cy.get(this.emailField).type("adminpcare@pursuecare.com");
+    cy.get(this.passwordField).type("Akshay@123");
+    cy.get(this.logInButton).click();
     return this;
   }
 
 
-    clickAppointmentafterMeeting()
-    {
+  selectRecentAppointment() {
+    
+    cy.wait(5000);
+    cy.get(':nth-child(4) > .menu-toggle').click({ force: true });
+    cy.wait(3000);
+  
+    cy.get(':nth-child(4) > .ml-menu.ng-star-inserted > :nth-child(2) > .client-menu-font').click({ force: true });//appointment
+    cy.wait(4000);
+    
+    cy.get('.search-text').click({ force: true });
+    cy.get('#input-search-text').type("Dilawar Singh").click({ force: true });
+    cy.get('.all-items > .ng-star-inserted').click({ force: true });
+    cy.wait(4000);
+    cy.get("body").click();
+    cy.wait(2000);
+
+
+
+    //Select the most recent one
+
+    cy.get('.pill.pill-Confirmed_by_Staff .pill-name.text-truncate')
+  .contains('Dilawar S.')
+  .parents('.pill')
+  .last({ force: true })
+  .click({force:true})
+
+
+  cy.wait(2000);
+  cy.get('button[mat-mini-fab][color="warn"].mat-mini-fab.mat-warn').scrollIntoView()
+  .click({force:true})
+  cy.wait(2000);
+
+  cy.get('button.mat-raised-button.mat-primary .mat-button-wrapper').contains('Delete')
+  .click({force:true})
+  cy.wait(2000);
+  
+
+    return this;
+
+
+  }
+  clickAppointmentafterMeeting() {
     cy.wait(2000);
     cy.get(".list > :nth-child(4) > .ng-star-inserted").click({ force: true });
     cy.wait(4000);
 
-    // Select the most recent one
-    // cy.get(
-    //   "full-calendar .fc-day-grid-event.fc-h-event.fc-event-pills .pill.pill-completed .pill-content .pill-bottom > button.pill-button"
-    // )
-    //   .last({ force: true })
-    //   .scrollIntoView({ force: true })
-    //   // .should('be.visible') // Ensure it's visible
-    //   .click({ force: true }); // Perform the click
-    // cy.wait(4000);
-    // cy.get(
-    //   'mat-radio-group[formcontrolname="appointmentstatus"] mat-radio-button'
-    // )
-
-    //   .contains("Confirmed by Staff") // Replace with the visible text for the button
-    //   .click({ force: true }); // Click the radio button
-    // cy.wait(2000);
-    // cy.get(this.btnApptmtSave).scrollIntoView().click({ force: true });
-    // cy.wait(2000);
-    // cy.get(this.menuDashboard).click({ force: true });
-    // cy.wait(2000);
-    // // cy.get(
-    // //   'td[role="gridcell"].mat-cell.cdk-cell.cdk-column-appointmentstatus.mat-column-appointmentstatus'
-    // // ).should("be.visible");
-    // cy.get(
-    //   ".cdk-column-appointmentstatus > .mat-sort-header-container > .mat-sort-header-content"
-    // ).scrollIntoView({ force: true });
-    // cy.wait(2000);
+   
     return this;
   }
 
@@ -515,12 +587,60 @@ return this;
 
     cy.wait(4000);
 
-  
+
 
     return this;
   }
 
+  verifyZoomElementsNoShow() {
+    cy.wait(6000);
+    // Example selectors; adjust based on the actual structure of the Zoom page
+    cy.get(
+      "button[mat-raised-button][mat-dialog-close].mdc-button.mat-mdc-raised-button.mat-primary"
+    ).click();
 
+    //enable audio
+    cy.wait(2000);
+    // Verify audio element
+
+    cy.get('button[aria-label="Mute"]').click();
+    cy.wait(5000);
+    cy.get('button[aria-label="Start Video"]').click();
+    cy.wait(5000);
+    cy.get('button[aria-label="Stop Video"]').click();
+    cy.wait(3000);
+
+    // //share
+    cy.get('button[aria-label="Start Share"]').click({ force: true });
+    cy.wait(4000);
+    cy.get('button[aria-label="Stop Share"]').click({ force: true });
+    // // Verify username
+    cy.get('button[aria-label="Users"]').click();
+
+    cy.wait(4000);
+    // cy.get("header.msger-header.ng-star-inserted > button.header-btn").click();
+
+    cy.get("button").contains("Close").click({ force: true });
+    // cy.wait(2000);
+
+    ///End button
+    cy.wait(2000);
+    cy.get('button[aria-label="End"]').click({ force: true });
+    cy.wait(2000);
+    // cy.get('button.mat-mdc-menu-item[role="menuitem"][aria-disabled="false"]')
+    //   .contains("Leave")
+    //cy.get(':nth-child(1) > .mat-mdc-menu-item-text')
+    //   .click({ force: true }); //leave option
+    cy.get(":nth-child(2) > .mat-mdc-menu-item-text")
+      .should("contain.text", "End")
+      .click({ force: true });
+
+    cy.wait(4000);
+
+
+
+    return this;
+  }
 
   joinZoomMeeting1() {
     const todayDate = new Date().getDate();
@@ -560,19 +680,19 @@ return this;
     //cy.get(this.currentTime).contains(expectedTime,{force:true}).click({force:true})
     // cy.get(this.currentTime).last({force:true})
     //cy.wait(3000);
-    
+
     // cy.get(".cdk-column-starttime > .mat-sort-header-container").dblclick({
     //   force: true,
     // });
     cy.wait(10000);
-   // cy.get('tbody > :nth-child(1) > .cdk-column-name')
- 
- //cy.get('mat-tooltip-trigger material-icons custom-icon-font cutom-cursor-default isInWR-Grey meOffline ng-star-inserted').invoke('show')
-  cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').realHover('mouse')
- // cy.get(':nth-child(8) > [data-layer="Content"]').realHover('mouse')
-  //
- // .should('have.attr', 'mattooltip', 'Appointment').realHover()
-   // console.log(cy.get(('i.mat-tooltip-trigger')))
+    // cy.get('tbody > :nth-child(1) > .cdk-column-name')
+
+    //cy.get('mat-tooltip-trigger material-icons custom-icon-font cutom-cursor-default isInWR-Grey meOffline ng-star-inserted').invoke('show')
+    cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').realHover('mouse')
+    // cy.get(':nth-child(8) > [data-layer="Content"]').realHover('mouse')
+    //
+    // .should('have.attr', 'mattooltip', 'Appointment').realHover()
+    // console.log(cy.get(('i.mat-tooltip-trigger')))
 
     // cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').scrollIntoView({
     //   force: true,
@@ -582,7 +702,7 @@ return this;
     //   "trigger",
     //   "mouseover"
     // );
- 
+
     cy.get(this.iconZoom).click();
     cy.wait(3000);
     this.verifyZoomElementsLeave();

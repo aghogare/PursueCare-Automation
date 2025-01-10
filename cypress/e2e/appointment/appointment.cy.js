@@ -5,6 +5,7 @@ const appointment = new Appointment();
 //const patient=new Patient();
 
 describe("Sceduling appointments for the Patient", () => {
+  const appointment = new Appointment();
   beforeEach(function () {
     cy.fixture("appointment/appointment.json").as("appointments");
     cy.fixture("createPatient/createPatient1.json").as("patients");
@@ -21,7 +22,7 @@ describe("Sceduling appointments for the Patient", () => {
       .selectCaseManager()
       .selectPatientAccess(this.appointments.patientAccess)
       .selectHost(this.appointments.host)
-      .selectPatientName("Dulquerrrrrr Salmaannn")
+      .selectPatientName("Dulquerr Salmaan")
 
       .selectAppointmentDate()
       .setOwlTimerTime(2)
@@ -35,17 +36,17 @@ describe("Sceduling appointments for the Patient", () => {
       //.clickDashboard()
   })
 
-  it("Validate joining zoom meeting and updating status", function () {
+  it("Validate joining zoom meeting and updating status 'Patient No Show'", function () {
     const fname=appointment.generateFirstName()  
     appointment
 
-      
+    .clickDashboard()
       //.clickDashboard()
      // .selectState()
      // .joinZoomMeeting1()
       .joinZoomMeeting()
-      .verifyZoomElements()
-      .changeStatus(3)
+      .verifyZoomElementsNoShow()
+      .changeStatus()
       .clickAppointmentafterMeeting()
      // .clickReport()
       //.clickDashboard()
@@ -55,12 +56,33 @@ describe("Sceduling appointments for the Patient", () => {
     const fname=appointment.generateFirstName()  
     appointment
 
-     
+      .clickDashboard()
       .clickReport()
       
   });
 
-  it.only("Validate joining zoom meeting  for dynamically created patient", function () {
+  it("Validate deleting of recently created zoom meeting", function () {
+appointment
+    .clickScheduleAppointment()
+      .selectAppointmentType()
+      .selectCaseManager()
+      .selectPatientAccess(this.appointments.patientAccess)
+      .selectHost(this.appointments.host)
+      .selectPatientName("Dilawar Singh")
+      //.selectPatientName("Dulquerr Salmaan")
+      .selectAppointmentDate()
+      .setOwlTimerTime(2)    
+      .setOwlTimerEndTime(15)    
+      .clickONSave()
+      .clickDashboard()    
+
+    appointment.adminLogin()
+    .selectRecentAppointment()
+   
+
+  })
+
+  it("Validate joining zoom meeting   patient joining with green light", function () {
     
     const fname=this.patients.firstName
     appointment
@@ -70,8 +92,30 @@ describe("Sceduling appointments for the Patient", () => {
       .selectCaseManager()
       .selectPatientAccess(this.appointments.patientAccess)
       .selectHost(this.appointments.host)
-      //.selectPatientName("Dulquerrrrrr Salmaannn")
-      .selectPatientName(fname)
+      .selectPatientName("Dulquerr Salmaan")
+      //.selectPatientName(fname)
+      .selectAppointmentDate()
+      .setOwlTimerTime(2)
+      .setOwlTimerEndTime(15)
+      .clickONSave()
+      .clickDashboard()
+       .joinZoomMeetingorangelight()
+      //.clickReport()
+      //.clickDashboard()
+  });
+
+  it("Validate joining zoom meeting patient", function () {
+    
+    const fname=this.patients.firstName
+    appointment
+
+      .clickScheduleAppointment()
+      .selectAppointmentType()
+      .selectCaseManager()
+      .selectPatientAccess(this.appointments.patientAccess)
+      .selectHost(this.appointments.host)
+      .selectPatientName("Dulquerr Salmaan")
+      //.selectPatientName(fname)
       .selectAppointmentDate()
       .setOwlTimerTime(2)
       .setOwlTimerEndTime(15)
@@ -81,13 +125,13 @@ describe("Sceduling appointments for the Patient", () => {
      // .joinZoomMeeting1()
       .joinZoomMeeting()
       .verifyZoomElements()
-      .changeStatus()
+      .statusCompleted()
       .clickAppointmentafterMeeting()
       .clickReport()
       //.clickDashboard()
   });
 
-  it("Validate assigning zoom meeting for the given patient", function () {
+  it.only("Validate assigning zoom meeting for the given patient checking joining of patient from app turns icon grey to orange", function () {
     const fname=appointment.generateFirstName()  
     appointment
 
@@ -97,8 +141,8 @@ describe("Sceduling appointments for the Patient", () => {
       .selectCaseManager()
       .selectPatientAccess(this.appointments.patientAccess)
       .selectHost(this.appointments.host)
-     // .selectPatientName("Dulquerrrrrr Salmaannn")
-      .selectPatientName(this.patients.firstName)
+      .selectPatientName("Dulquerr Salmaan")
+      //.selectPatientName(this.patients.firstName)
       .selectAppointmentDate()
       .setOwlTimerTime(2)
       // .clickTimeSlot()s
@@ -106,8 +150,8 @@ describe("Sceduling appointments for the Patient", () => {
       .setOwlTimerEndTime(15)
       .clickONSave()
       .clickDashboard()
-      .selectState()
-      .joinZoomMeeting()
+      // .selectState()
+      // .joinZoomMeeting()
   });
 
   afterEach(() => {
