@@ -11,7 +11,7 @@
     "createPatient": "cypress run --spec 'cypress/e2e/createPatient/createPatient.cy.js'",
     "appointment": "cypress run --spec 'cypress/e2e/appointment/appointment.cy.js'",
     "runAllInOrder": "npm run login && npm run createPatient && npm run appointment",
-    "run:all": "npx cypress run --browser=chrome --headed --reporter mocha-allure-reporter --spec 'cypress/e2e/loginPage/loginPageDefaultValidation.cy.js,cypress/e2e/createPatient/createPatient.cy.js,cypress/e2e/appointment/appointment.cy.js'",
+    "run:all": "node init && npx cypress run --browser=chrome --headed --reporter mocha-allure-reporter --spec 'cypress/e2e/loginPage/loginPageDefaultValidation.cy.js,cypress/e2e/createPatient/createPatient.cy.js,cypress/e2e/appointment/appointment.cy.js'",
     "report:allure": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   }
 }
