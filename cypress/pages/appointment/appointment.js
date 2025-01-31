@@ -187,6 +187,7 @@ class appointment {
     //cy.get(':nth-child(4) > .owl-dt-day-4 > .owl-dt-calendar-cell-content').dblclick({force:true})//date 27/11
     return this;
   }
+
   clickTimeSlot() {
     cy.wait(2000);
     //cy.get(this.availableTimeSlot).click({force:true})
@@ -389,10 +390,22 @@ class appointment {
     cy.get(':nth-child(8) > .ml-menu.ng-star-inserted > :nth-child(1) > .client-menu-font').click({ force: true })
     // cy.get(':nth-child(3) > .mat-form-field > .mat-form-field-wrapper > .mat-form-field-flex > .mat-form-field-infix').select(2,{force:true})
     cy.get('.cdk-column-appointmentstatus > .mat-sort-header-container > .mat-sort-header-arrow').click({ force: true })
-
+    cy.wait(7000)
     return this;
   }
 
+  greyToOrange() {
+    cy.wait(5000);
+   cy.get('.cdk-column-name > .mat-tooltip-trigger').scrollIntoView({ force: true });
+   cy.wait(3000);
+   cy.get('.cdk-column-name > .mat-tooltip-trigger').click({ force: true });
+  //  cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').scrollIntoView({ force: true });
+  //  cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').realHover('mouse')
+ 
+   //cy.get(':nth-child(1) > .cdk-column-name > .mat-tooltip-trigger').click({ force: true });
+    cy.wait(6000);
+    return this;
+  }
 
   joinZoomMeeting() {
     const todayDate = new Date().getDate();
@@ -502,7 +515,8 @@ class appointment {
     cy.wait(4000);
     
     cy.get('.search-text').click({ force: true });
-    cy.get('#input-search-text').type("Dilawar Singh").click({ force: true });
+   // cy.get('#input-search-text').type("Dilawar Singh").click({ force: true });
+    cy.get('#input-search-text').type("Dulquerr Salmaan").click({ force: true });
     cy.get('.all-items > .ng-star-inserted').click({ force: true });
     cy.wait(4000);
     cy.get("body").click();
@@ -512,8 +526,8 @@ class appointment {
 
     //Select the most recent one
 
-    cy.get('.pill.pill-Confirmed_by_Staff .pill-name.text-truncate')
-  .contains('Dilawar S.')
+    cy.get('.pill.pill-patientNoShow .pill-name.text-truncate')
+  .contains('Dulquerr S.')
   .parents('.pill')
   .last({ force: true })
   .click({force:true})
